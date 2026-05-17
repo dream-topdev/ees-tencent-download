@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Downloads</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7f9;
+      --card: #fff;
+      --text: #1a1d21;
+      --muted: #5c6570;
+      --border: #dde2e8;
+      --link: #0b57d0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121418;
+        --card: #1c2028;
+        --text: #e8eaed;
+        --muted: #9aa0a6;
+        --border: #2d333b;
+        --link: #8ab4f8;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 2rem 1rem 3rem;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    main {
+      max-width: 52rem;
+      margin: 0 auto;
+    }
+    h1 { margin: 0 0 0.25rem; font-size: 1.75rem; }
+    #meta { color: var(--muted); margin: 0 0 1.5rem; font-size: 0.95rem; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+    section h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+      word-break: break-word;
+    }
+    ul { margin: 0; padding: 0; list-style: none; }
+    li {
+      padding: 0.35rem 0;
+      border-top: 1px solid var(--border);
+    }
+    li:first-child { border-top: none; }
+    a { color: var(--link); word-break: break-all; }
+    .size { color: var(--muted); font-size: 0.9rem; }
+    .error { color: #c5221f; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Downloads</h1>
+    <p id="meta">Loading catalog…</p>
+    <div id="groups"></div>
+  </main>
+  <script>
+    const metaEl = document.getElementById('meta');
+    const groupsEl = document.getElementById('groups');
+
+    fetch('files.json')
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        metaEl.textContent = `${data.fileCount} files · updated ${data.generatedAt}`;
+
+        const byGroup = new Map();
+        for (const f of data.files) {
+          const g = f.group || '(other)';
+          if (!byGroup.has(g)) byGroup.set(g, []);
+          byGroup.get(g).push(f);
+        }
+
+        for (const [group, files] of byGroup) {
+          const section = document.createElement('section');
+          const heading = document.createElement('h2');
+          heading.textContent = group;
+          section.appendChild(heading);
+
+          const ul = document.createElement('ul');
+          for (const f of files) {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = f.url;
+            a.textContent = f.name;
+            a.setAttribute('download', '');
+            const size = document.createElement('span');
+            size.className = 'size';
+            size.textContent = ` — ${f.sizeHuman}`;
+            li.appendChild(a);
+            li.appendChild(size);
+            ul.appendChild(li);
+          }
+          section.appendChild(ul);
+          groupsEl.appendChild(section);
+        }
+      })
+      .catch((err) => {
+        metaEl.innerHTML = '<span class="error">Failed to load files.json. Upload it next to this page.</span>';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
