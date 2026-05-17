@@ -53,68 +53,281 @@
     }
     ul { margin: 0; padding: 0; list-style: none; }
     li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
       padding: 0.35rem 0;
       border-top: 1px solid var(--border);
     }
     li:first-child { border-top: none; }
+    .dl-check {
+      flex: 0 0 1.1rem;
+      margin-top: 0.15rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1;
+      color: transparent;
+      user-select: none;
+    }
+    li.downloaded .dl-check {
+      color: #137333;
+    }
+    @media (prefers-color-scheme: dark) {
+      li.downloaded .dl-check { color: #6dd58c; }
+    }
+    .file-line { flex: 1; min-width: 0; }
     a { color: var(--link); word-break: break-all; }
     .size { color: var(--muted); font-size: 0.9rem; }
     .error { color: #c5221f; }
+    #gate {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: var(--bg);
+      z-index: 10;
+    }
+    #gate[hidden] { display: none; }
+    #gate-card {
+      width: 100%;
+      max-width: 22rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.25rem;
+    }
+    #gate-card h2 { margin: 0 0 0.35rem; font-size: 1.15rem; }
+    #gate-card p { margin: 0 0 1rem; color: var(--muted); font-size: 0.9rem; }
+    #gate-form label { display: block; font-size: 0.9rem; margin-bottom: 0.35rem; }
+    #gate-form input {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font: inherit;
+      background: var(--bg);
+      color: var(--text);
+    }
+    #gate-form button {
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.55rem;
+      border: none;
+      border-radius: 6px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--link);
+      color: #fff;
+    }
+    #gate-error { margin: 0.65rem 0 0; min-height: 1.25rem; }
+    #lock {
+      margin: 0 0 1rem;
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    #lock[hidden] { display: none; }
+    main[hidden] { display: none; }
   </style>
 </head>
 <body>
-  <main>
+  <div id="gate" aria-label="Access code required">
+    <div id="gate-card">
+      <h2>Access required</h2>
+      <p>Enter the access code to view the download catalog.</p>
+      <form id="gate-form" autocomplete="off">
+        <label for="access-code">Access code</label>
+        <input id="access-code" name="code" type="password" required autofocus />
+        <button type="submit">Continue</button>
+        <p id="gate-error" class="error" role="alert"></p>
+      </form>
+    </div>
+  </div>
+  <main id="app" hidden>
+    <button type="button" id="lock" hidden>Lock catalog</button>
     <h1>Downloads</h1>
     <p id="meta">Loading catalog…</p>
     <div id="groups"></div>
   </main>
   <script>
+    // SHA-256 (hex) of your access code. Change before publishing.
+    // Default code: ees-downloads — generate a new hash in the browser console:
+    //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-code')).then(b =>
+    //     console.log([...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('')));
+    const ACCESS_CODE_SHA256 = 'e4cb2b58a222b38937201bbf1ec2d0d30e64f5d6aab03004d6941a3f70ddd361';
+    const AUTH_STORAGE_KEY = 'ees-downloads-auth';
+    const DOWNLOADED_STORAGE_KEY = 'ees-downloads-clicked';
+
+    const gateEl = document.getElementById('gate');
+    const gateForm = document.getElementById('gate-form');
+    const gateError = document.getElementById('gate-error');
+    const accessInput = document.getElementById('access-code');
+    const appEl = document.getElementById('app');
+    const lockBtn = document.getElementById('lock');
     const metaEl = document.getElementById('meta');
     const groupsEl = document.getElementById('groups');
 
-    fetch('files.json')
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((data) => {
-        metaEl.textContent = `${data.fileCount} files · updated ${data.generatedAt}`;
+    async function hashAccessCode(code) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(code));
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
 
-        const byGroup = new Map();
-        for (const f of data.files) {
-          const g = f.group || '(other)';
-          if (!byGroup.has(g)) byGroup.set(g, []);
-          byGroup.get(g).push(f);
-        }
+    function isAuthenticated() {
+      return sessionStorage.getItem(AUTH_STORAGE_KEY) === ACCESS_CODE_SHA256;
+    }
 
-        for (const [group, files] of byGroup) {
-          const section = document.createElement('section');
-          const heading = document.createElement('h2');
-          heading.textContent = group;
-          section.appendChild(heading);
+    function unlock() {
+      gateEl.hidden = true;
+      appEl.hidden = false;
+      lockBtn.hidden = false;
+    }
 
-          const ul = document.createElement('ul');
-          for (const f of files) {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = f.url;
-            a.textContent = f.name;
-            a.setAttribute('download', '');
-            const size = document.createElement('span');
-            size.className = 'size';
-            size.textContent = ` — ${f.sizeHuman}`;
-            li.appendChild(a);
-            li.appendChild(size);
-            ul.appendChild(li);
+    function loadDownloadedSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(DOWNLOADED_STORAGE_KEY) || '[]'));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveDownloadedSet(set) {
+      localStorage.setItem(DOWNLOADED_STORAGE_KEY, JSON.stringify([...set]));
+    }
+
+    function markFileDownloaded(url, li) {
+      const set = loadDownloadedSet();
+      if (set.has(url)) return;
+      set.add(url);
+      saveDownloadedSet(set);
+      li.classList.add('downloaded');
+      li.querySelector('.dl-check')?.setAttribute('aria-label', 'Download clicked');
+    }
+
+    function countMarkedInCatalog(files) {
+      const set = loadDownloadedSet();
+      return files.filter((f) => set.has(f.url)).length;
+    }
+
+    function updateMetaProgress(fileCount, downloadedCount) {
+      let text = `${fileCount} files`;
+      if (window.__catalogUpdatedAt) text += ` · updated ${window.__catalogUpdatedAt}`;
+      if (downloadedCount > 0) text += ` · ${downloadedCount} marked downloaded`;
+      metaEl.textContent = text;
+    }
+
+    function lock() {
+      sessionStorage.removeItem(AUTH_STORAGE_KEY);
+      groupsEl.replaceChildren();
+      window.__catalogUpdatedAt = '';
+      metaEl.textContent = 'Loading catalog…';
+      gateError.textContent = '';
+      accessInput.value = '';
+      lockBtn.hidden = true;
+      appEl.hidden = true;
+      gateEl.hidden = false;
+      accessInput.focus();
+    }
+
+    function loadCatalog() {
+      fetch('files.json')
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then((data) => {
+          window.__catalogUpdatedAt = data.generatedAt;
+          const downloaded = loadDownloadedSet();
+
+          const byGroup = new Map();
+          for (const f of data.files) {
+            const g = f.group || '(other)';
+            if (!byGroup.has(g)) byGroup.set(g, []);
+            byGroup.get(g).push(f);
           }
-          section.appendChild(ul);
-          groupsEl.appendChild(section);
-        }
-      })
-      .catch((err) => {
-        metaEl.innerHTML = '<span class="error">Failed to load files.json. Upload it next to this page.</span>';
-        console.error(err);
-      });
+
+          for (const [group, files] of byGroup) {
+            const section = document.createElement('section');
+            const heading = document.createElement('h2');
+            heading.textContent = group;
+            section.appendChild(heading);
+
+            const ul = document.createElement('ul');
+            for (const f of files) {
+              const li = document.createElement('li');
+              if (downloaded.has(f.url)) li.classList.add('downloaded');
+
+              const check = document.createElement('span');
+              check.className = 'dl-check';
+              check.textContent = '✓';
+              check.setAttribute('aria-hidden', downloaded.has(f.url) ? 'false' : 'true');
+              if (downloaded.has(f.url)) check.setAttribute('aria-label', 'Download clicked');
+
+              const line = document.createElement('span');
+              line.className = 'file-line';
+
+              const a = document.createElement('a');
+              a.href = f.url;
+              a.textContent = f.name;
+              a.setAttribute('download', '');
+              a.addEventListener('click', () => {
+                markFileDownloaded(f.url, li);
+                updateMetaProgress(data.fileCount, countMarkedInCatalog(data.files));
+              });
+
+              const size = document.createElement('span');
+              size.className = 'size';
+              size.textContent = ` — ${f.sizeHuman}`;
+
+              line.appendChild(a);
+              line.appendChild(size);
+              li.appendChild(check);
+              li.appendChild(line);
+              ul.appendChild(li);
+            }
+            section.appendChild(ul);
+            groupsEl.appendChild(section);
+          }
+
+          updateMetaProgress(data.fileCount, countMarkedInCatalog(data.files));
+        })
+        .catch((err) => {
+          metaEl.innerHTML = '<span class="error">Failed to load files.json. Upload it next to this page.</span>';
+          console.error(err);
+        });
+    }
+
+    gateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      gateError.textContent = '';
+      if (!crypto.subtle) {
+        gateError.textContent = 'Access codes require HTTPS (or localhost).';
+        return;
+      }
+      const hash = await hashAccessCode(accessInput.value);
+      if (hash !== ACCESS_CODE_SHA256) {
+        gateError.textContent = 'Incorrect access code.';
+        accessInput.select();
+        return;
+      }
+      sessionStorage.setItem(AUTH_STORAGE_KEY, ACCESS_CODE_SHA256);
+      unlock();
+      loadCatalog();
+    });
+
+    lockBtn.addEventListener('click', lock);
+
+    if (isAuthenticated()) {
+      unlock();
+      loadCatalog();
+    }
   </script>
 </body>
 </html>
