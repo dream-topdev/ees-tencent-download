@@ -1,9 +1,45 @@
 {
-    "generatedAt":  "2026-05-17T18:22:06.3033619Z",
+    "generatedAt":  "2026-05-19T15:07:30.6772221Z",
     "baseUrl":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/",
     "prefix":  "",
-    "fileCount":  144,
+    "fileCount":  156,
     "files":  [
+                  {
+                      "name":  "20260518.7z.001",
+                      "key":  "team2/20260518.7z.001",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/20260518.7z.001",
+                      "sizeBytes":  10485760000,
+                      "sizeHuman":  "9.77 GB",
+                      "modTime":  "2026-05-19T13:17:09.000000000Z",
+                      "group":  "20260518.7z"
+                  },
+                  {
+                      "name":  "20260518.7z.002",
+                      "key":  "team2/20260518.7z.002",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/20260518.7z.002",
+                      "sizeBytes":  10485760000,
+                      "sizeHuman":  "9.77 GB",
+                      "modTime":  "2026-05-19T13:22:19.000000000Z",
+                      "group":  "20260518.7z"
+                  },
+                  {
+                      "name":  "20260518.7z.003",
+                      "key":  "team2/20260518.7z.003",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/20260518.7z.003",
+                      "sizeBytes":  10485760000,
+                      "sizeHuman":  "9.77 GB",
+                      "modTime":  "2026-05-19T13:17:09.000000000Z",
+                      "group":  "20260518.7z"
+                  },
+                  {
+                      "name":  "20260518.7z.004",
+                      "key":  "team2/20260518.7z.004",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/20260518.7z.004",
+                      "sizeBytes":  480824026,
+                      "sizeHuman":  "458.55 MB",
+                      "modTime":  "2026-05-19T13:17:09.000000000Z",
+                      "group":  "20260518.7z"
+                  },
                   {
                       "name":  "datasheets_[2ja-ake]1.sha256",
                       "key":  "datasheets/datasheets_[2ja-ake]1.sha256",
@@ -1058,13 +1094,31 @@
                       "group":  null
                   },
                   {
-                      "name":  "ees-202605150948.7z",
-                      "key":  "database/ees-202605150948.7z",
-                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/database/ees-202605150948.7z",
-                      "sizeBytes":  2513902602,
+                      "name":  "dump-ees-202605181012.7z",
+                      "key":  "database/dump-ees-202605181012.7z",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/database/dump-ees-202605181012.7z",
+                      "sizeBytes":  2513902145,
                       "sizeHuman":  "2.34 GB",
-                      "modTime":  "2026-05-17T13:14:22.000000000Z",
-                      "group":  "ees-202605150948.7z"
+                      "modTime":  "2026-05-18T17:23:09.000000000Z",
+                      "group":  "dump-ees-202605181012.7z"
+                  },
+                  {
+                      "name":  "EES-explorer.7z",
+                      "key":  "source/EES-explorer.7z",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/source/EES-explorer.7z",
+                      "sizeBytes":  745277707,
+                      "sizeHuman":  "710.75 MB",
+                      "modTime":  "2026-05-18T22:39:34.000000000Z",
+                      "group":  "EES-explorer.7z"
+                  },
+                  {
+                      "name":  "final-2.0-dump-ees-202605121837.7z.001",
+                      "key":  "database/final-2.0-dump-ees-202605121837.7z.001",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/database/final-2.0-dump-ees-202605121837.7z.001",
+                      "sizeBytes":  8539848804,
+                      "sizeHuman":  "7.95 GB",
+                      "modTime":  "2026-05-18T15:35:40.000000000Z",
+                      "group":  "final-2.0-dump-ees-202605121837.7z"
                   },
                   {
                       "name":  "images_[2ja-ect]1.sha256",
@@ -1292,12 +1346,66 @@
                       "group":  null
                   },
                   {
-                      "name":  "index.html",
-                      "key":  "index.html",
-                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/index.html",
-                      "sizeBytes":  3547,
-                      "sizeHuman":  "3.46 KB",
-                      "modTime":  "2026-05-17T13:45:12.815825100-04:00",
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-001.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-001.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-001.zip",
+                      "sizeBytes":  2097792870,
+                      "sizeHuman":  "1.95 GB",
+                      "modTime":  "2026-05-18T12:47:06.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-002.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-002.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-002.zip",
+                      "sizeBytes":  2097792870,
+                      "sizeHuman":  "1.95 GB",
+                      "modTime":  "2026-05-18T13:17:03.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-003.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-003.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-003.zip",
+                      "sizeBytes":  2097792870,
+                      "sizeHuman":  "1.95 GB",
+                      "modTime":  "2026-05-18T13:44:09.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-004.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-004.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-004.zip",
+                      "sizeBytes":  2097792870,
+                      "sizeHuman":  "1.95 GB",
+                      "modTime":  "2026-05-18T13:54:51.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-005.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-005.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-005.zip",
+                      "sizeBytes":  2097792870,
+                      "sizeHuman":  "1.95 GB",
+                      "modTime":  "2026-05-18T12:02:06.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-006.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-006.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-006.zip",
+                      "sizeBytes":  2020669955,
+                      "sizeHuman":  "1.88 GB",
+                      "modTime":  "2026-05-18T12:02:07.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "Qwen3.5-9B-HuggingFace-20260518T115222Z-3-007.zip",
+                      "key":  "team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-007.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Qwen3.5-9B-HuggingFace-20260518T115222Z-3-007.zip",
+                      "sizeBytes":  1048896446,
+                      "sizeHuman":  "1,000.31 MB",
+                      "modTime":  "2026-05-18T12:02:13.000000000Z",
                       "group":  null
                   }
               ]
