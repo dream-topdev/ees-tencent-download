@@ -1,8 +1,8 @@
 {
-    "generatedAt":  "2026-05-22T08:37:12.1123392Z",
+    "generatedAt":  "2026-05-22T22:48:18.2867873Z",
     "baseUrl":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/",
     "prefix":  "",
-    "fileCount":  164,
+    "fileCount":  165,
     "files":  [
                   {
                       "name":  "20260518.7z.001",
@@ -1124,10 +1124,19 @@
                       "name":  "Electronic-Element-Search-v2.7z",
                       "key":  "source/Electronic-Element-Search-v2.7z",
                       "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/source/Electronic-Element-Search-v2.7z",
-                      "sizeBytes":  912449511,
-                      "sizeHuman":  "870.18 MB",
-                      "modTime":  "2026-05-22T06:03:55.000000000Z",
+                      "sizeBytes":  983774180,
+                      "sizeHuman":  "938.20 MB",
+                      "modTime":  "2026-05-22T16:15:23.000000000Z",
                       "group":  "Electronic-Element-Search-v2.7z"
+                  },
+                  {
+                      "name":  "Electronic-Element-Search-v2-ubuntu.7z",
+                      "key":  "source/Electronic-Element-Search-v2-ubuntu.7z",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/source/Electronic-Element-Search-v2-ubuntu.7z",
+                      "sizeBytes":  599245076,
+                      "sizeHuman":  "571.48 MB",
+                      "modTime":  "2026-05-22T22:45:17.000000000Z",
+                      "group":  "Electronic-Element-Search-v2-ubuntu.7z"
                   },
                   {
                       "name":  "final-2.0-dump-ees-202605121837.7z.001",
