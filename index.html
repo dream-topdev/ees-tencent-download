@@ -216,8 +216,27 @@
       return files.filter((f) => set.has(f.url)).length;
     }
 
+    function sumCatalogBytes(files) {
+      return files.reduce((sum, f) => sum + (Number(f.sizeBytes) || 0), 0);
+    }
+
+    function formatTotalSize(bytes) {
+      const KB = 1024;
+      const MB = KB * 1024;
+      const GB = MB * 1024;
+      const TB = GB * 1024;
+      if (bytes >= TB) return `${(bytes / TB).toFixed(2)} TB`;
+      if (bytes >= GB) return `${(bytes / GB).toFixed(2)} GB`;
+      if (bytes >= MB) return `${(bytes / MB).toFixed(2)} MB`;
+      if (bytes >= KB) return `${(bytes / KB).toFixed(2)} KB`;
+      return `${bytes} B`;
+    }
+
     function updateMetaProgress(fileCount, downloadedCount) {
       let text = `${fileCount} files`;
+      if (window.__catalogTotalBytes > 0) {
+        text += ` · ${formatTotalSize(window.__catalogTotalBytes)} total`;
+      }
       if (window.__catalogUpdatedAt) text += ` · updated ${window.__catalogUpdatedAt}`;
       if (downloadedCount > 0) text += ` · ${downloadedCount} marked downloaded`;
       metaEl.textContent = text;
@@ -227,6 +246,7 @@
       sessionStorage.removeItem(AUTH_STORAGE_KEY);
       groupsEl.replaceChildren();
       window.__catalogUpdatedAt = '';
+      window.__catalogTotalBytes = 0;
       metaEl.textContent = 'Loading catalog…';
       gateError.textContent = '';
       accessInput.value = '';
@@ -244,6 +264,7 @@
         })
         .then((data) => {
           window.__catalogUpdatedAt = data.generatedAt;
+          window.__catalogTotalBytes = sumCatalogBytes(data.files);
           const downloaded = loadDownloadedSet();
 
           const byGroup = new Map();
