@@ -1,8 +1,8 @@
 {
-    "generatedAt":  "2026-05-19T15:21:28.2571710Z",
+    "generatedAt":  "2026-05-22T00:47:45.5429454Z",
     "baseUrl":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/",
     "prefix":  "",
-    "fileCount":  157,
+    "fileCount":  162,
     "files":  [
                   {
                       "name":  "20260518.7z.001",
@@ -1121,6 +1121,42 @@
                       "group":  "final-2.0-dump-ees-202605121837.7z"
                   },
                   {
+                      "name":  "Guard.7z.001",
+                      "key":  "team2/Guard.7z.001",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Guard.7z.001",
+                      "sizeBytes":  10485760000,
+                      "sizeHuman":  "9.77 GB",
+                      "modTime":  "2026-05-21T11:54:45.000000000Z",
+                      "group":  "Guard.7z"
+                  },
+                  {
+                      "name":  "Guard.7z.002",
+                      "key":  "team2/Guard.7z.002",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Guard.7z.002",
+                      "sizeBytes":  10485760000,
+                      "sizeHuman":  "9.77 GB",
+                      "modTime":  "2026-05-21T11:54:42.000000000Z",
+                      "group":  "Guard.7z"
+                  },
+                  {
+                      "name":  "Guard.7z.003",
+                      "key":  "team2/Guard.7z.003",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Guard.7z.003",
+                      "sizeBytes":  10485760000,
+                      "sizeHuman":  "9.77 GB",
+                      "modTime":  "2026-05-21T11:54:42.000000000Z",
+                      "group":  "Guard.7z"
+                  },
+                  {
+                      "name":  "Guard.7z.004",
+                      "key":  "team2/Guard.7z.004",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/Guard.7z.004",
+                      "sizeBytes":  1918944386,
+                      "sizeHuman":  "1.79 GB",
+                      "modTime":  "2026-05-21T12:07:32.000000000Z",
+                      "group":  "Guard.7z"
+                  },
+                  {
                       "name":  "images_[2ja-ect]1.sha256",
                       "key":  "images/images_[2ja-ect]1.sha256",
                       "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/images/images_%5B2ja-ect%5D1.sha256",
@@ -1415,6 +1451,15 @@
                       "sizeBytes":  1048896446,
                       "sizeHuman":  "1,000.31 MB",
                       "modTime":  "2026-05-18T12:02:13.000000000Z",
+                      "group":  null
+                  },
+                  {
+                      "name":  "T2_APP.zip",
+                      "key":  "team2/T2_APP.zip",
+                      "url":  "https://ees-1432526240.cos.ap-guangzhou.myqcloud.com/team2/T2_APP.zip",
+                      "sizeBytes":  18817284019,
+                      "sizeHuman":  "17.52 GB",
+                      "modTime":  "2026-05-21T12:07:30.000000000Z",
                       "group":  null
                   }
               ]
